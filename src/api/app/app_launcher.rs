@@ -1,17 +1,17 @@
 use rocket::{Build, Rocket, routes};
 use crate::api::app::cors::CORS;
 
-use crate::api::tasks::routes::task_read_router::{hello, tasks};
-use crate::api::tasks::routes::task_write_router::{create, running_task, pending_all_task};
-use crate::api::tasks::services::tasks_repository_mongo::TasksRepositoryMongo;
-use crate::models::tasks::errors::custom::CustomError;
+use crate::api::authz_card::routes::authz_card_read_router::{hello, authz_cards_all, authz_cards_by_resource};
+use crate::api::authz_card::routes::authz_card_write_router::{create};
+use crate::api::authz_card::services::authz_card_repository_mongo::AuthzCardRepositoryMongo;
+use crate::models::authz_card::errors::custom::CustomError;
 
 pub struct AppLauncher;
 
 impl AppLauncher {
     pub async fn launch_rocket() -> Result<Rocket<Build>, CustomError> {
 
-        TasksRepositoryMongo::new().await
+        AuthzCardRepositoryMongo::new().await
             .map(|taks_mongo_repository| {
                 rocket::build()
                     .manage(taks_mongo_repository)
@@ -20,10 +20,9 @@ impl AppLauncher {
                         "/",
                         routes![
                             hello,
-                            tasks,
-                            create,
-                            running_task,
-                            pending_all_task
+                            authz_cards_all,
+                            authz_cards_by_resource,
+                            create
                         ]
                     )
             })

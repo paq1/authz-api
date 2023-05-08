@@ -3,9 +3,9 @@ use rocket::response::status;
 use rocket::serde::json::Json;
 use rocket::State;
 
-use crate::api::tasks::services::authz_card_repository_mongo::AuthzCardRepositoryMongo;
-use crate::core::tasks::entities::authz_card::AuthzCard;
-use crate::core::tasks::services::authz_card_repository::AuthzCardRepository;
+use crate::api::authz_card::services::authz_card_repository_mongo::AuthzCardRepositoryMongo;
+use crate::core::authz_card::entities::authz_card::AuthzCard;
+use crate::core::authz_card::services::authz_card_repository::AuthzCardRepository;
 use crate::models::authz_card::commands::create_authz_card_command::CreateAuthzCardCommand;
 use crate::models::authz_card::views::json_data_response::JsonDataResponse;
 

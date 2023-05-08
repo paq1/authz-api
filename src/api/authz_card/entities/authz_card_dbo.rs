@@ -1,7 +1,7 @@
 use mongodb::bson::{Bson, Document};
 use mongodb::bson::oid::ObjectId;
 use rocket::serde::{Deserialize, Serialize};
-use crate::core::tasks::entities::authz_card::AuthzCard;
+use crate::core::authz_card::entities::authz_card::AuthzCard;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(crate = "rocket::serde")]

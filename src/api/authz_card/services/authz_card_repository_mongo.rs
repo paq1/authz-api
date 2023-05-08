@@ -5,9 +5,9 @@ use mongodb::results::InsertOneResult;
 use rocket::futures::{TryFutureExt, TryStreamExt};
 
 use crate::api::app::mongo_component::ClientMongoComponent;
-use crate::api::tasks::entities::authz_card_dbo::AuthzCardDbo;
-use crate::core::tasks::entities::authz_card::AuthzCard;
-use crate::core::tasks::services::authz_card_repository::AuthzCardRepository;
+use crate::api::authz_card::entities::authz_card_dbo::AuthzCardDbo;
+use crate::core::authz_card::entities::authz_card::AuthzCard;
+use crate::core::authz_card::services::authz_card_repository::AuthzCardRepository;
 use crate::models::authz_card::errors::custom::CustomError;
 
 pub struct AuthzCardRepositoryMongo {

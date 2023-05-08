@@ -1,4 +1,4 @@
-use crate::core::tasks::entities::authz_card::AuthzCard;
+use crate::core::authz_card::entities::authz_card::AuthzCard;
 use crate::models::authz_card::errors::custom::CustomError;
 
 #[async_trait]
