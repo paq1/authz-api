@@ -35,3 +35,26 @@ pub async fn create(
             )
         })
 }
+
+#[delete("/authz_card/commands/delete/<resource>/<action>")]
+pub async fn delete(
+    authz_card_repository: &State<AuthzCardRepositoryMongo>,
+    resource: &str,
+    action: &str
+) -> Result<Json<JsonDataResponse>, status::Custom<Json<JsonDataResponse>>> {
+
+    authz_card_repository
+        .delete_authz_card(
+            resource, action
+        )
+        .await
+        .map(|_| Json(JsonDataResponse::new("deleted")))
+        .map_err(|err| {
+            status::Custom(
+                Status::BadRequest,
+                Json(
+                    JsonDataResponse::new(err.message.as_str())
+                )
+            )
+        })
+}

@@ -18,14 +18,17 @@ impl ClientMongoComponent for AuthzCardRepositoryMongo {}
 
 #[async_trait]
 impl AuthzCardRepository for AuthzCardRepositoryMongo {
-    async fn insert_authz_card(&self, task: AuthzCard) -> Result<(), CustomError> {
-        if !self.exist(&task).await {
+    async fn insert_authz_card(&self, authz_card: AuthzCard) -> Result<(), CustomError> {
+        if !self.exist(&authz_card).await {
             self
-                .insert_task_without_check(&task)
+                .insert_task_without_check(&authz_card)
                 .await
                 .map(|_| ())
         } else {
-            Err(CustomError::new("la carte existe déjà en base"))
+            self.delete_authz_card(authz_card.resource.as_str(), authz_card.action.as_str())
+                .and_then(|_| self.insert_task_without_check(&authz_card))
+                .await
+                .map(|_| ())
         }
     }
 
@@ -125,7 +128,7 @@ impl AuthzCardRepositoryMongo {
     }
 
     async fn exist(&self, task: &AuthzCard) -> bool {
-        self.fetch_one_by_id(task.description.as_str(), task.action.as_str())
+        self.fetch_one_by_id(task.resource.as_str(), task.action.as_str())
             .await
             .is_ok()
     }

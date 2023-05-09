@@ -2,7 +2,7 @@ use rocket::{Build, Rocket, routes};
 use crate::api::app::cors::CORS;
 
 use crate::api::authz_card::routes::authz_card_read_router::{hello, authz_cards_all, authz_cards_by_resource};
-use crate::api::authz_card::routes::authz_card_write_router::{create};
+use crate::api::authz_card::routes::authz_card_write_router::{create, delete};
 use crate::api::authz_card::services::authz_card_repository_mongo::AuthzCardRepositoryMongo;
 use crate::models::authz_card::errors::custom::CustomError;
 
@@ -22,7 +22,8 @@ impl AppLauncher {
                             hello,
                             authz_cards_all,
                             authz_cards_by_resource,
-                            create
+                            create,
+                            delete
                         ]
                     )
             })
